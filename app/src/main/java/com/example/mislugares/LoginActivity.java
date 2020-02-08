@@ -18,6 +18,7 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
+    private boolean isEmailSended = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +28,22 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+        usuario.reload();
         if (usuario != null) {
             Toast.makeText(this, "inicia sesión: " + usuario.getDisplayName() + " -" + usuario.getEmail(), Toast.LENGTH_LONG).show();
-            Intent i = new Intent(this, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
+            if (usuario.isEmailVerified()) {
+
+                Intent i = new Intent(this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            } else {
+                if (!isEmailSended) {
+                    usuario.sendEmailVerification();
+                    isEmailSended = true;
+                    Toast.makeText(this, "Se ha enviado un correo de verificación a tu cuenta. Revísalo", Toast.LENGTH_LONG).show();
+                }else
+                    Toast.makeText(this, "Revisa tu correo:" + usuario.getEmail() + " y verifica tu cuenta antes de continuar", Toast.LENGTH_LONG).show();
+            }
         } else {
             List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
             startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setIsSmartLockEnabled(true).build(), RC_SIGN_IN);
