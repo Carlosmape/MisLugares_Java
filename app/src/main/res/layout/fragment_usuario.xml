@@ -14,11 +14,16 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:paddingTop="0dp"
-            android:src="@android:drawable/sym_def_app_icon" />
+            android:src="@android:drawable/sym_def_app_icon"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:orientation="horizontal">
 
             <TextView
@@ -26,30 +31,63 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre de usuario: " />
 
-            <TextView
+            <EditText
                 android:id="@+id/nombre"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contraseña: " />
+
+
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Correo: " />
 
-            <TextView
+            <EditText
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textEmailAddress"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,7 +102,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,12 +114,16 @@
             <TextView
                 android:id="@+id/movilenumber"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,11 +137,20 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_cerrar_sesion"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_edit_profile"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:padding="8dp"
+            android:text="Editar perfil" />
+        <Button
+            android:id="@+id/btn_cerrar_sesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:background="#d0021b"
             android:padding="8dp"
             android:text="Cerrar sesión"
