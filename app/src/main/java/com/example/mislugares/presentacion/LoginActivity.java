@@ -1,4 +1,4 @@
-package com.example.mislugares;
+package com.example.mislugares.presentacion;
 
 import android.content.Intent;
 import android.os.Bundle;
