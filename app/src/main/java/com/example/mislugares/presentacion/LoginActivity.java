@@ -28,9 +28,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
-        usuario.reload();
         if (usuario != null) {
             Toast.makeText(this, "inicia sesión: " + usuario.getDisplayName() + " -" + usuario.getEmail(), Toast.LENGTH_LONG).show();
+            usuario.reload();
             if (usuario.isEmailVerified()) {
 
                 Intent i = new Intent(this, MainActivity.class);
