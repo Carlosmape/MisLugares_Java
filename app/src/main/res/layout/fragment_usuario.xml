@@ -9,6 +9,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/imagen"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:paddingTop="0dp"
+            android:src="@android:drawable/sym_def_app_icon" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
