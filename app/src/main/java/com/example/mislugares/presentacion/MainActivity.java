@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         adaptador = ((Aplicacion) getApplication()).adaptador;
         usoLugar = new CasosUsoLugar(this, null, lugares, adaptador);
         usoActividades = new CasosUsoActividades(this);
-        usoLocalizacion  = new CasosUsoLocalizacion(this, SOLICITUD_PERMISO_LOCALIZACION);
+        usoLocalizacion = new CasosUsoLocalizacion(this, SOLICITUD_PERMISO_LOCALIZACION);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,22 +96,27 @@ public class MainActivity extends AppCompatActivity {
             lanzarVistaLugar(null);
             return true;
         }
-        if (id==R.id.menu_mapa) {
+        if (id == R.id.menu_mapa) {
             usoActividades.lanzarMapa();
+        }
+        if (id == R.id.menu_usuario) {
+            Intent intent = new Intent(this, UsuarioActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public void onRequestPermissionsResult(int requestCode,
-                                                     String[] permissions, int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
         if (requestCode == SOLICITUD_PERMISO_LOCALIZACION
                 && grantResults.length == 1
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             usoLocalizacion.permisoConcedido();
-            //recyclerView.invalidate();
+        //recyclerView.invalidate();
     }
 
-    public void lanzarVistaLugar(View view){
+    public void lanzarVistaLugar(View view) {
         final EditText entrada = new EditText(this);
         entrada.setText("0");
         new AlertDialog.Builder(this)
@@ -123,32 +128,36 @@ public class MainActivity extends AppCompatActivity {
                         int id = Integer.parseInt(entrada.getText().toString());
                         usoLugar.mostrar(id);
 
-                    }})
+                    }
+                })
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
 
-   // LOCALIZACION
+    // LOCALIZACION
 
-    @Override protected void onActivityResult(int requestCode, int resultCode,
-                                              Intent data) {
-        super.onActivityResult(requestCode,resultCode, data);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULTADO_PREFERENCIAS) {
-           adaptador.setCursor(lugares.extraeCursor());
-           adaptador.notifyDataSetChanged();
-           if (usoLugar.obtenerFragmentVista() != null)
-              usoLugar.mostrar(0);
+            adaptador.setCursor(lugares.extraeCursor());
+            adaptador.notifyDataSetChanged();
+            if (usoLugar.obtenerFragmentVista() != null)
+                usoLugar.mostrar(0);
 
         }
     }
 
-   @Override protected void onResume() {
-      super.onResume();
-      usoLocalizacion.activar();
-   }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        usoLocalizacion.activar();
+    }
 
-   @Override protected void onPause() {
-      super.onPause();
-      usoLocalizacion.desactivar();
-   }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        usoLocalizacion.desactivar();
+    }
 }

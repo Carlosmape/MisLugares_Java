@@ -36,6 +36,8 @@
             android:label="Preferencias"/>
         <activity android:name="com.example.mislugares.presentacion.MapaActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="com.example.mislugares.presentacion.UsuarioActivity"
+            android:label="Información sobre el usuario" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="es.upv.jtomas.mislugares.fileProvider2"
