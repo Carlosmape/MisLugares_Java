@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "945572065223",
+    "firebase_url": "https://mis-lugares-2020-72280.firebaseio.com",
+    "project_id": "mis-lugares-2020-72280",
+    "storage_bucket": "mis-lugares-2020-72280.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945572065223:android:e23a5443bc8d22e5f8b3e2",
+        "android_client_info": {
+          "package_name": "com.example.mislugares"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945572065223-r9br7unls417hc28j2lolg4bhljabna3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq2JGtMUQPr7OeW9D8m_sltLExIzmwG6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945572065223-r9br7unls417hc28j2lolg4bhljabna3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
