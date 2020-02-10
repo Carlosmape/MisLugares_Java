@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mislugares.R;
 import com.example.mislugares.presentacion.MainActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         if (usuario != null) {
             Toast.makeText(this, "inicia sesión: " + usuario.getDisplayName() + " -" + usuario.getEmail(), Toast.LENGTH_LONG).show();
             usuario.reload();
-            if (usuario.isEmailVerified()) {
+            if (usuario.getEmail().isEmpty() || usuario.isEmailVerified()) {
 
                 Intent i = new Intent(this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -45,8 +46,12 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "Revisa tu correo:" + usuario.getEmail() + " y verifica tu cuenta antes de continuar", Toast.LENGTH_LONG).show();
             }
         } else {
-            List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build());
-            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setIsSmartLockEnabled(true).build(), RC_SIGN_IN);
+            List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build(), new AuthUI.IdpConfig.PhoneBuilder().build());
+            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
+                    .setLogo(R.mipmap.ic_launcher)
+                    .setTheme(R.style.FirebaseUITheme)
+                    .setAvailableProviders(providers)
+                    .setIsSmartLockEnabled(true).build(), RC_SIGN_IN);
         }
     }
 

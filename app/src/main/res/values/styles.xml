@@ -14,4 +14,21 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="FirebaseUITheme"></style>
+
+    <style name="FirebaseUITema" parent="FirebaseUI">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimaryDark">#388E3C</item>
+        <item name="colorAccent">#AA00FF</item>
+        <item name="colorControlNormal">#4CAF50</item>
+        <item name="colorControlActivated">#AEEA00</item>
+        <item name="colorControlHighlight">#69F0AE</item>
+        <item name="android:windowBackground">@android:color/holo_green_light
+        </item> <!--o reemplaza por drawable-->
+    </style>
+
 </resources>
