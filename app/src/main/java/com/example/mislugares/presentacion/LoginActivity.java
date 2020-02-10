@@ -1,7 +1,12 @@
 package com.example.mislugares.presentacion;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +19,8 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,11 +49,11 @@ public class LoginActivity extends AppCompatActivity {
                     usuario.sendEmailVerification();
                     isEmailSended = true;
                     Toast.makeText(this, "Se ha enviado un correo de verificación a tu cuenta. Revísalo", Toast.LENGTH_LONG).show();
-                }else
+                } else
                     Toast.makeText(this, "Revisa tu correo:" + usuario.getEmail() + " y verifica tu cuenta antes de continuar", Toast.LENGTH_LONG).show();
             }
         } else {
-            List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build(), new AuthUI.IdpConfig.PhoneBuilder().build());
+            List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build(), new AuthUI.IdpConfig.PhoneBuilder().build(), new AuthUI.IdpConfig.FacebookBuilder().build());
             startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                     .setLogo(R.mipmap.ic_launcher)
                     .setTheme(R.style.FirebaseUITheme)
