@@ -47,9 +47,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class UsuarioFragment extends Fragment {
     EditText nombre;
-    EditText email;
+    TextView email;
     TextView phone;
-    EditText password;
+    TextView password;
     FirebaseUser usuario;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -81,9 +81,9 @@ public class UsuarioFragment extends Fragment {
         nombre = (EditText) vista.findViewById(R.id.nombre);
         nombre.setText(usuario.getDisplayName());
 
-        password = (EditText) vista.findViewById(R.id.password);
+        password = (TextView) vista.findViewById(R.id.password);
 
-        email = (EditText) vista.findViewById(R.id.email);
+        email = (TextView) vista.findViewById(R.id.email);
         email.setText(usuario.getEmail());
 
         TextView provider = (TextView) vista.findViewById(R.id.proveedor);
@@ -108,15 +108,15 @@ public class UsuarioFragment extends Fragment {
                         else Toast.makeText(view.getContext(), "Nombre de usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                if ((email.getText().toString().equals(usuario.getEmail())) || (!password.getText().toString().equals(""))) {
-                    //FirebaseAuth.getInstance().signOut();
-                    //Intent i = new Intent(getActivity(), LoginActivity.class);
-                    //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    //startActivity(i);
-                    //getActivity().finish();
-                    Toast.makeText(view.getContext(), "No está permitido cambiar la contraseña, correo o teléfono", Toast.LENGTH_LONG).show();
-                }
+                //TODO: implement change mail and password
+//                if ((email.getText().toString().equals(usuario.getEmail())) || (!password.getText().toString().equals(""))) {
+//                    //FirebaseAuth.getInstance().signOut();
+//                    //Intent i = new Intent(getActivity(), LoginActivity.class);
+//                    //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    //startActivity(i);
+//                    //getActivity().finish();
+//                    Toast.makeText(view.getContext(), "No está permitido cambiar la contraseña, correo o teléfono", Toast.LENGTH_LONG).show();
+//                }
             }
         });
 
