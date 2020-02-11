@@ -267,4 +267,27 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
             }
         });
     }
+
+    public void reestablecerContraseña(View v) {
+        correo = etCorreo.getText().toString();
+        tilCorreo.setError("");
+        if (correo.isEmpty()) {
+            tilCorreo.setError("Introduce un correo");
+        } else if (!correo.matches(".+@.+[.].+")) {
+            tilCorreo.setError("Correo no válido");
+        } else {
+            dialogo.show();
+            auth.sendPasswordResetEmail(correo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    dialogo.dismiss();
+                    if (task.isSuccessful()) {
+                        mensaje("Verifica tu correo para cambiar contraseña.");
+                    } else {
+                        mensaje("ERROR al mandar correo para cambiar contraseña");
+                    }
+                }
+            });
+        }
+    }
 }
