@@ -9,16 +9,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.mislugares.R;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 
-public class CustomMailLoginActivity extends Activity {
+public class CustomMailLoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private String correo = "";
     private String contraseña = "";
@@ -26,6 +35,9 @@ public class CustomMailLoginActivity extends Activity {
     private EditText etCorreo, etContraseña;
     private TextInputLayout tilCorreo, tilContraseña;
     private ProgressDialog dialogo;
+
+    private static final int RC_GOOGLE_SIGN_IN = 123;
+    private GoogleApiClient googleApiClient;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +50,10 @@ public class CustomMailLoginActivity extends Activity {
         dialogo = new ProgressDialog(this);
         dialogo.setTitle("Verificando usuario");
         dialogo.setMessage("Por favor espere...");
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+
         verificaSiUsuarioValidado();
     }
 
@@ -65,6 +81,11 @@ public class CustomMailLoginActivity extends Activity {
                 }
             });
         }
+    }
+
+    public void autentificarGoogle(View v) {
+        Intent i = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(i, RC_GOOGLE_SIGN_IN);
     }
 
     public void registroCorreo(View v) {
@@ -113,5 +134,40 @@ public class CustomMailLoginActivity extends Activity {
 
     public void firebaseUI(View v) {
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_GOOGLE_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    googleAuth(result.getSignInAccount());
+                } else {
+                    mensaje("Error de autentificación con Google");
+                }
+            }
+        }
+    }
+
+    private void googleAuth(GoogleSignInAccount acct) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    mensaje(task.getException().getLocalizedMessage());
+                } else {
+                    verificaSiUsuarioValidado();
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        mensaje("Error de autentificación con Google");
     }
 }

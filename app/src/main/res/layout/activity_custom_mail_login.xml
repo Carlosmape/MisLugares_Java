@@ -77,6 +77,18 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/inicio_sesión" />
 
+
+            <Button
+                android:id="@+id/inicio_sesión_google"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="autentificarGoogle"
+                android:text="Iniciar sesión con Google"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inicio_sesión" />
+
             <Button
                 android:id="@+id/firebase_ui"
                 android:layout_width="match_parent"
@@ -86,7 +98,7 @@
                 android:text="Iniciar sesión con FirebaseUI"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inicio_sesión" />
+                app:layout_constraintTop_toBottomOf="@+id/inicio_sesión_google" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>
