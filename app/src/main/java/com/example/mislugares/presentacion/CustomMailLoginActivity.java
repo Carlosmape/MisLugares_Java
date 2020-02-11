@@ -12,6 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.mislugares.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -24,7 +32,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class CustomMailLoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -39,8 +49,12 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
     private static final int RC_GOOGLE_SIGN_IN = 123;
     private GoogleApiClient googleApiClient;
 
+    private CallbackManager callbackManager;
+    private LoginButton btnFacebook;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(this);
         setContentView(R.layout.activity_custom_mail_login);
         etCorreo = (EditText) findViewById(R.id.correo);
         etContraseña = (EditText) findViewById(R.id.contraseña);
@@ -53,6 +67,26 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+
+        callbackManager = CallbackManager.Factory.create();
+        btnFacebook = (LoginButton) findViewById(R.id.facebook);
+        btnFacebook.setReadPermissions("email", "public_profile");
+        btnFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                facebookAuth(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                mensaje("Cancelada autentificación con facebook");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                mensaje(error.getLocalizedMessage());
+            }
+        });
 
         verificaSiUsuarioValidado();
     }
@@ -81,6 +115,23 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
                 }
             });
         }
+    }
+
+    private void facebookAuth(AccessToken accessToken) {
+        final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException){
+                        LoginManager.getInstance().logOut();
+                    }
+                    mensaje(task.getException().getLocalizedMessage());
+                } else {
+                    verificaSiUsuarioValidado();
+                }
+            }
+        });
     }
 
     public void autentificarGoogle(View v) {
@@ -148,6 +199,8 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
                     mensaje("Error de autentificación con Google");
                 }
             }
+        } else if (requestCode == btnFacebook.getRequestCode()) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
