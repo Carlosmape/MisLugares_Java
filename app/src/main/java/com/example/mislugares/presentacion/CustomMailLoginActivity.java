@@ -53,10 +53,15 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
     private CallbackManager callbackManager;
     private LoginButton btnFacebook;
 
+    private boolean unificar;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this);
         setContentView(R.layout.activity_custom_mail_login);
+
+        unificar = getIntent().getBooleanExtra("unificar", false);
+
         etCorreo = (EditText) findViewById(R.id.correo);
         etContraseña = (EditText) findViewById(R.id.contraseña);
         tilCorreo = (TextInputLayout) findViewById(R.id.til_correo);
@@ -93,7 +98,7 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
     }
 
     private void verificaSiUsuarioValidado() {
-        if (auth.getCurrentUser() != null) {
+        if (!unificar && auth.getCurrentUser() != null) {
             Intent i = new Intent(this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
@@ -136,19 +141,23 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
 
     private void facebookAuth(AccessToken accessToken) {
         final AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
-        auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                        LoginManager.getInstance().logOut();
+        if (unificar) {
+            unificarCon(credential);
+        } else {
+            auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            LoginManager.getInstance().logOut();
+                        }
+                        mensaje(task.getException().getLocalizedMessage());
+                    } else {
+                        verificaSiUsuarioValidado();
                     }
-                    mensaje(task.getException().getLocalizedMessage());
-                } else {
-                    verificaSiUsuarioValidado();
                 }
-            }
-        });
+            });
+        }
     }
 
     public void autentificarGoogle(View v) {
@@ -223,21 +232,39 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
 
     private void googleAuth(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    mensaje(task.getException().getLocalizedMessage());
-                } else {
-                    verificaSiUsuarioValidado();
+        if (unificar) {
+            unificarCon(credential);
+        } else {
+            auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        mensaje(task.getException().getLocalizedMessage());
+                    } else {
+                        verificaSiUsuarioValidado();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
-
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mensaje("Error de autentificación con Google");
+    }
+
+    private void unificarCon(AuthCredential credential) {
+        auth.getCurrentUser().linkWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    unificar = false;
+                    verificaSiUsuarioValidado();
+                } else {
+                    Log.w("MisLugares", "Error en linkWithCredential", task.getException());
+                    mensaje("Error al unificarcuentas.");
+                }
+            }
+        });
     }
 }

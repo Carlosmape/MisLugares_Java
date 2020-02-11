@@ -95,6 +95,16 @@ public class UsuarioFragment extends Fragment {
         TextView uid = (TextView) vista.findViewById(R.id.iduser);
         uid.setText(usuario.getUid());
 
+        Button unirCuenta = (Button) vista.findViewById(R.id.btn_unify_profile);
+        unirCuenta.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), CustomMailLoginActivity.class);
+                i.putExtra("unificar", true);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
+
         Button editProfile = (Button) vista.findViewById(R.id.btn_edit_profile);
         editProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(final View view) {
@@ -104,8 +114,10 @@ public class UsuarioFragment extends Fragment {
                 usuario.updateProfile(perfil).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (!task.isSuccessful()) Toast.makeText(view.getContext(), "No se pudo modificar el nombre de usuario", Toast.LENGTH_SHORT).show();
-                        else Toast.makeText(view.getContext(), "Nombre de usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
+                        if (!task.isSuccessful())
+                            Toast.makeText(view.getContext(), "No se pudo modificar el nombre de usuario", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(view.getContext(), "Nombre de usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
                     }
                 });
                 //TODO: implement change mail and password
