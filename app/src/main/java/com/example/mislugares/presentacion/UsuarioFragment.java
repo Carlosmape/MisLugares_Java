@@ -131,7 +131,7 @@ public class UsuarioFragment extends Fragment {
             AuthUI.getInstance().signOut(getActivity()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    Intent i = new Intent(getActivity(), LoginActivity.class);
+                    Intent i = new Intent(getActivity(), CustomMailLoginActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     getActivity().finish();
