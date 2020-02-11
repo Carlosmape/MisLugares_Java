@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -100,6 +101,22 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
         }
     }
 
+    public void autentificacionAnonima(View v) {
+        dialogo.show();
+        auth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    verificaSiUsuarioValidado();
+                } else {
+                    dialogo.dismiss();
+                    Log.w("MisLugares", "Error en signInAnonymously", task.getException());
+                    mensaje("ERROR al intentarentrar de forma anónima");
+                }
+            }
+        });
+    }
+
     public void inicioSesiónCorreo(View v) {
         if (verificaCampos(false)) {
             dialogo.show();
@@ -123,7 +140,7 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    if (task.getException() instanceof FirebaseAuthUserCollisionException){
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         LoginManager.getInstance().logOut();
                     }
                     mensaje(task.getException().getLocalizedMessage());
