@@ -33,6 +33,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -124,18 +125,23 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
 
     public void inicioSesiónCorreo(View v) {
         if (verificaCampos(false)) {
+            AuthCredential credential = EmailAuthProvider.getCredential(correo, contraseña);
             dialogo.show();
-            auth.signInWithEmailAndPassword(correo, contraseña).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        verificaSiUsuarioValidado();
-                    } else {
-                        dialogo.dismiss();
-                        mensaje(task.getException().getLocalizedMessage());
+            if (unificar) {
+                unificarCon(credential);
+            } else {
+                auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            verificaSiUsuarioValidado();
+                        } else {
+                            dialogo.dismiss();
+                            mensaje(task.getException().getLocalizedMessage());
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
