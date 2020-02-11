@@ -39,9 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         if (usuario != null) {
             Toast.makeText(this, "inicia sesión: " + usuario.getDisplayName() + " -" + usuario.getEmail(), Toast.LENGTH_LONG).show();
             usuario.reload();
-            if (usuario.getEmail().isEmpty() || usuario.isEmailVerified()) {
+            if (usuario.getEmail() == null || usuario.getEmail().isEmpty() || usuario.isEmailVerified()) {
 
                 Intent i = new Intent(this, MainActivity.class);
+                if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) i.putExtra("editProfile", true);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             } else {

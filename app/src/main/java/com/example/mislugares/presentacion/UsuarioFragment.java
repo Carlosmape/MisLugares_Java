@@ -47,9 +47,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class UsuarioFragment extends Fragment {
     EditText nombre;
-    TextView email;
+    EditText email;
     TextView phone;
-    TextView password;
     FirebaseUser usuario;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -81,9 +80,7 @@ public class UsuarioFragment extends Fragment {
         nombre = (EditText) vista.findViewById(R.id.nombre);
         nombre.setText(usuario.getDisplayName());
 
-        password = (TextView) vista.findViewById(R.id.password);
-
-        email = (TextView) vista.findViewById(R.id.email);
+        email = (EditText) vista.findViewById(R.id.email);
         email.setText(usuario.getEmail());
 
         TextView provider = (TextView) vista.findViewById(R.id.proveedor);
@@ -106,11 +103,19 @@ public class UsuarioFragment extends Fragment {
         });
 
         Button editProfile = (Button) vista.findViewById(R.id.btn_edit_profile);
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            public void onClick(final View view) {
+        editProfile.setOnClickListener(EditProfile);
+
+        Button cerrarSesion = (Button) vista.findViewById(R.id.btn_cerrar_sesion);
+        cerrarSesion.setOnClickListener(SignOutAndReload);
+        return vista;
+    }
+
+    private View.OnClickListener EditProfile = new View.OnClickListener() {
+        @Override
+        public void onClick(final View view) {
+            try {
                 UserProfileChangeRequest perfil = new UserProfileChangeRequest.Builder()
                         .setDisplayName(nombre.getText().toString()).build();
-
                 usuario.updateProfile(perfil).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -120,24 +125,24 @@ public class UsuarioFragment extends Fragment {
                             Toast.makeText(view.getContext(), "Nombre de usuario cambiado correctamente", Toast.LENGTH_SHORT).show();
                     }
                 });
-                //TODO: implement change mail and password
-//                if ((email.getText().toString().equals(usuario.getEmail())) || (!password.getText().toString().equals(""))) {
-//                    //FirebaseAuth.getInstance().signOut();
-//                    //Intent i = new Intent(getActivity(), LoginActivity.class);
-//                    //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    //startActivity(i);
-//                    //getActivity().finish();
-//                    Toast.makeText(view.getContext(), "No está permitido cambiar la contraseña, correo o teléfono", Toast.LENGTH_LONG).show();
-//                }
+                if (!email.getText().toString().equals(usuario.getEmail()) || email.getText() == null) {
+                    usuario.updateEmail(email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful())
+                                Toast.makeText(view.getContext(), "No se pudo modificar el correo", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(view.getContext(), "Correo cambiado correctamente", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }catch (Exception ex){
+                Log.println(Log.ERROR,"!!! Exception --> ", ex.getMessage());
             }
-        });
+        }
+    };
 
-        Button cerrarSesion = (Button) vista.findViewById(R.id.btn_cerrar_sesion);
-        cerrarSesion.setOnClickListener(SignOutAndReload);
-        return vista;
-    }
-
-    private View.OnClickListener SignOutAndReload = new View.OnClickListener() {
+            private View.OnClickListener SignOutAndReload = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             AuthUI.getInstance().signOut(getActivity()).addOnCompleteListener(new OnCompleteListener<Void>() {

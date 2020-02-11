@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 usoLugar.nuevo();
             }
         });
+
+        if(getIntent().getBooleanExtra("editProfile", false)) {
+            Intent intent = new Intent(this, UsuarioActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
