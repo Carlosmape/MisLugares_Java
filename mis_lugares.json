@@ -1,0 +1,78 @@
+{
+  "lugares" : {
+    "1" : {
+      "nombre" : "Escuela Politécnica Superior de Gandía",
+      "direccion" : "C/ Paranimf, 1 46730 Gandia (SPAIN)",
+      "posicion" : {
+        "longitud" : -0.166093,
+        "latitud" : 38.995656
+      },
+      "tipo" : "EDUCACION",
+	  "foto" : "http://mmoviles.upv.es/mis_lugares/foto_epsg.jpg",
+      "telefono" : 962849300,
+      "url" : "http://www.epsg.upv.es",
+      "comentario" : "Uno de los mejores lugares para formarse",
+	  "fecha" : 1504515893130,
+      "valoracion" : 3
+    },
+    "2" : {
+      "nombre" : "Al de siempre",
+      "direccion" : "P.Industrial Junto Molí Nou - 46722, Benifla (Valencia)",
+      "posicion" : {
+        "longitud" : -0.190642,
+        "latitud" : 38.925857
+      },
+      "tipo" : "BAR",
+	  "foto" : "http://mmoviles.upv.es/mis_lugares/aldesiempre.jpg",
+      "telefono" : 636472405,
+      "url" : "",
+      "comentario" : "No te pierdas el arroz en calabaza.",
+	  "fecha" : 1504515948942,
+      "valoracion" : 3
+    },
+    "3" : {
+      "nombre" : "androidcurso.com",
+      "direccion" : "ciberespacio",
+      "posicion" : {
+        "longitud" : 0,
+        "latitud" : 0
+      },
+      "tipo" : "EDUCACION",
+      "foto" : "http://mmoviles.upv.es/mis_lugares/androidcurso.jpg",
+      "telefono" : 962849300,
+      "url" : "http://androidcurso.com",
+      "comentario" : "Amplia tus conocimientos sobre Android.",
+	  "fecha" : 1504515950000,
+      "valoracion" : 5
+    },
+    "4" : {
+      "nombre" : "Barranco del Infierno",
+      "direccion" : "Vía Verde del río Serpis. Villalonga (Valencia)",
+      "posicion" : {
+        "longitud" : -0.295058,
+        "latitud" : 38.867180
+      },
+      "tipo" : "NATURALEZA",
+      "foto" : "http://mmoviles.upv.es/mis_lugares/safor_lorcha_mapa.jpg",
+      "telefono" : 0,
+      "url" : "http://sosegaos.blogspot.com.es/2009/02/lorcha-villalonga-via-verde-del-rio.html",
+      "comentario" : "Espectacular ruta para bici o andar.",
+	  "fecha" : 1504515960000,
+      "valoracion" : 4
+    },
+    "5" : {
+      "nombre" : "La Vital",
+      "direccion" : "Avda. La Vital,0 46701 Gandia (Valencia)",
+      "posicion" : {
+        "longitud" : -0.1720092,
+        "latitud" : 38.9705949
+      },
+      "tipo" : "COMPRAS",
+      "telefono" : 962881070,
+      "url" : "http://www.lavital.es",
+      "comentario" : "El típico centro comercial",
+	  "fecha" : 1504515970000,
+      "valoracion" : 2
+    }
+  }
+}
