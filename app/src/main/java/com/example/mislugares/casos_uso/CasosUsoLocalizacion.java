@@ -14,6 +14,7 @@ import android.util.Log;
 import com.example.mislugares.Aplicacion;
 import com.example.mislugares.modelo.GeoPunto;
 import com.example.mislugares.presentacion.AdaptadorLugares;
+import com.example.mislugares.presentacion.AdaptadorLugaresFirestoreUI;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -27,7 +28,7 @@ public class CasosUsoLocalizacion implements LocationListener {
     private LocationManager manejadorLoc;
     private Location mejorLoc;
     private GeoPunto posicionActual;
-    private AdaptadorLugares adaptador;
+    private AdaptadorLugaresFirestoreUI adaptador;
 
     public CasosUsoLocalizacion(Activity actividad, int codigoPermiso) {
         this.actividad = actividad;

@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import com.example.mislugares.Aplicacion;
 import com.example.mislugares.R;
 import com.example.mislugares.casos_uso.CasosUsoLugar;
+import com.example.mislugares.datos.LugaresAsinc;
 import com.example.mislugares.datos.LugaresBD;
 import com.example.mislugares.modelo.Lugar;
 import com.example.mislugares.modelo.TipoLugar;
@@ -17,11 +18,11 @@ import com.example.mislugares.modelo.TipoLugar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EdicionLugarActivity extends AppCompatActivity {
-    private LugaresBD lugares;
-    private AdaptadorLugaresBD adaptador;
+    private LugaresAsinc lugares;
+    private AdaptadorLugaresFirestoreUI adaptador;
     private CasosUsoLugar usoLugar;
     private int pos;
-    private int _id;
+    private String _id;
     private Lugar lugar;
 
     private EditText nombre;
@@ -39,9 +40,9 @@ public class EdicionLugarActivity extends AppCompatActivity {
         usoLugar = new CasosUsoLugar(this, null, lugares, adaptador);
         Bundle extras = getIntent().getExtras();
         pos = extras.getInt("pos", -1);
-        _id = extras.getInt("_id", -1);
-        if (_id!=-1) lugar = lugares.elemento(_id);
-        else         lugar = adaptador.lugarPosicion (pos);
+        _id = extras.getString("_id", null);
+        if (_id!=null) lugar = new Lugar();
+        else         lugar = adaptador.getItem(pos);
         actualizaVistas();
     }
 
@@ -79,12 +80,12 @@ public class EdicionLugarActivity extends AppCompatActivity {
                 lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
                 lugar.setUrl(url.getText().toString());
                 lugar.setComentario(comentario.getText().toString());
-                if (_id==-1) _id = adaptador.idPosicion(pos);
+                if (_id==null) _id = adaptador.getKey(pos);
                 usoLugar.guardar(_id, lugar);
                 finish();
                 return true;
             case R.id.accion_cancelar:
-                if (_id!=-1) lugares.borrar(_id);
+                if (_id!=null) lugares.borrar(_id);
                 finish();
                 return true;
             default:

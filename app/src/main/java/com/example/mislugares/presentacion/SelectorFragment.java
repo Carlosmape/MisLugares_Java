@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.example.mislugares.Aplicacion;
 import com.example.mislugares.R;
 import com.example.mislugares.casos_uso.CasosUsoLugar;
-import com.example.mislugares.datos.LugaresBD;
+import com.example.mislugares.datos.LugaresAsinc;
 import com.example.mislugares.modelo.Lugar;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SelectorFragment extends Fragment {
-    private LugaresBD lugares;
-    private AdaptadorLugaresBD adaptador;
+    private LugaresAsinc lugares;
+    private AdaptadorLugaresFirestoreUI adaptador;
     public static AdaptadorLugaresFirestoreUI adaptador2;
     private CasosUsoLugar usoLugar;
     private RecyclerView recyclerView;
@@ -47,7 +47,7 @@ public class SelectorFragment extends Fragment {
         adaptador2 = new AdaptadorLugaresFirestoreUI(opciones, getContext());
         recyclerView.setAdapter(adaptador2);
         adaptador2.startListening();
-        adaptador2.setOnItemClickListener(new View.OnClickListener() {
+        adaptador.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos = (Integer) (v.getTag());
@@ -56,7 +56,12 @@ public class SelectorFragment extends Fragment {
         });
 
     }
-    @Override public void onDestroy() {super.onDestroy();adaptador2.stopListening();}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        adaptador2.stopListening();
+    }
 
     @Override
     public void onStart() {

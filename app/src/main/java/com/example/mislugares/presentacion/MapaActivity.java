@@ -25,10 +25,10 @@ import androidx.fragment.app.FragmentActivity;
 public class MapaActivity extends FragmentActivity
         implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private GoogleMap mapa;
-    //private RepositorioLugares lugares;
-    private AdaptadorLugaresBD adaptador;
+    private AdaptadorLugaresFirestoreUI adaptador;
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapa);
         //lugares = ((Aplicacion) getApplication()).lugares;
@@ -38,7 +38,8 @@ public class MapaActivity extends FragmentActivity
         mapFragment.getMapAsync(this);
     }
 
-    @Override public void onMapReady(GoogleMap googleMap) {
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
         mapa = googleMap;
         mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         if (ActivityCompat.checkSelfPermission(this,
@@ -49,12 +50,12 @@ public class MapaActivity extends FragmentActivity
             mapa.getUiSettings().setCompassEnabled(true);
         }
         if (adaptador.getItemCount() > 0) {
-            GeoPunto p = adaptador.lugarPosicion(0).getPosicion();
+            GeoPunto p = adaptador.getItem(0).getPosicion();
             mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(p.getLatitud(), p.getLongitud()), 12));
         }
-        for (int n=0; n<adaptador.getItemCount(); n++) {
-            Lugar lugar = adaptador.lugarPosicion(n);
+        for (int n = 0; n < adaptador.getItemCount(); n++) {
+            Lugar lugar = adaptador.getItem(n);
             GeoPunto p = lugar.getPosicion();
             if (p != null && p.getLatitud() != 0) {
                 Bitmap iGrande = BitmapFactory.decodeResource(
@@ -70,10 +71,11 @@ public class MapaActivity extends FragmentActivity
         mapa.setOnInfoWindowClickListener(this);
     }
 
-    @Override public void onInfoWindowClick(Marker marker) {
-        for (int pos=0; pos<adaptador.getItemCount(); pos++){
-            if (adaptador.lugarPosicion(pos).getNombre()
-                    .equals(marker.getTitle())){
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        for (int pos = 0; pos < adaptador.getItemCount(); pos++) {
+            if (adaptador.getItem(pos).getNombre()
+                    .equals(marker.getTitle())) {
                 Intent intent = new Intent(this, VistaLugarActivity.class);
                 intent.putExtra("pos", pos);
                 startActivity(intent);

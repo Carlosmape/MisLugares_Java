@@ -14,10 +14,8 @@ import com.example.mislugares.R;
 import com.example.mislugares.casos_uso.CasosUsoActividades;
 import com.example.mislugares.casos_uso.CasosUsoLocalizacion;
 import com.example.mislugares.casos_uso.CasosUsoLugar;
-import com.example.mislugares.datos.LugaresBD;
-import com.example.mislugares.datos.LugaresLista;
+import com.example.mislugares.datos.LugaresAsinc;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     static final int RESULTADO_PREFERENCIAS = 0;
 
     //private RecyclerView recyclerView;
-    private LugaresBD lugares;
-    public AdaptadorLugaresBD adaptador;
+    private LugaresAsinc lugares;
+    public AdaptadorLugaresFirestoreUI adaptador;
     private CasosUsoLugar usoLugar;
     private CasosUsoActividades usoActividades;
     private CasosUsoLocalizacion usoLocalizacion;
@@ -137,12 +135,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULTADO_PREFERENCIAS) {
-            adaptador.setCursor(lugares.extraeCursor());
-            adaptador.notifyDataSetChanged();
-            if (usoLugar.obtenerFragmentVista() != null)
-                usoLugar.mostrar(0);
-        }
+        //if (requestCode == RESULTADO_PREFERENCIAS) {
+        //    adaptador.notifyDataSetChanged();
+        //    if (usoLugar.obtenerFragmentVista() != null)
+        //        usoLugar.mostrar(0);
+        //}
     }
 
     @Override
