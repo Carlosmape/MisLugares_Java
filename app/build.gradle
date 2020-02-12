@@ -8,6 +8,7 @@ android {
         applicationId "com.example.mislugares"
         minSdkVersion 16
         targetSdkVersion 29 //28
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -23,6 +24,8 @@ android {
 }
 //28.0.0
 dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -38,5 +41,6 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.facebook.android:facebook-login:[4,5)'
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
 
 }

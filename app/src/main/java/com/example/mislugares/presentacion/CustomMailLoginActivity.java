@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.mislugares.R;
+import com.example.mislugares.datos.Usuarios;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -100,6 +101,7 @@ public class CustomMailLoginActivity extends FragmentActivity implements GoogleA
 
     private void verificaSiUsuarioValidado() {
         if (!unificar && auth.getCurrentUser() != null) {
+            Usuarios.guardarUsuario(auth.getCurrentUser());
             Intent i = new Intent(this, MainActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);

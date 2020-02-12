@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mislugares.R;
+import com.example.mislugares.datos.Usuarios;
 import com.example.mislugares.presentacion.MainActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private void login() {
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         if (usuario != null) {
+            Usuarios.guardarUsuario(usuario);
             Toast.makeText(this, "inicia sesión: " + usuario.getDisplayName() + " -" + usuario.getEmail(), Toast.LENGTH_LONG).show();
             usuario.reload();
             if (usuario.getEmail() == null || usuario.getEmail().isEmpty() || usuario.isEmailVerified()) {

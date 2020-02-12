@@ -1,5 +1,8 @@
 package com.example.mislugares.modelo;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class Usuario {
     private String nombre;
     private String correo;
@@ -41,4 +44,6 @@ public class Usuario {
     public void setInicioSesion(long inicioSesion) {
         this.inicioSesion = inicioSesion;
     }
+
+
 }
