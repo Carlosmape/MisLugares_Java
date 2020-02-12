@@ -47,17 +47,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*adaptador.setOnItemClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                int pos = (Integer)(v.getTag());
-                usoLugar.mostrar(pos);
-            }
-        });
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adaptador);*/
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             adaptador.notifyDataSetChanged();
             if (usoLugar.obtenerFragmentVista() != null)
                 usoLugar.mostrar(0);
-
         }
     }
 
