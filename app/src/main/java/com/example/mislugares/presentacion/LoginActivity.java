@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), new AuthUI.IdpConfig.GoogleBuilder().build(), new AuthUI.IdpConfig.PhoneBuilder().build(), new AuthUI.IdpConfig.FacebookBuilder().build());
             startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder()
                     .setLogo(R.mipmap.ic_launcher)
-                    .setTheme(R.style.FirebaseUITheme)
+                    .setTheme(R.style.FirebaseUITema)
                     .setAvailableProviders(providers)
                     .setIsSmartLockEnabled(true).build(), RC_SIGN_IN);
         }

@@ -14,8 +14,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="FirebaseUITheme"></style>
-
     <style name="FirebaseUITema" parent="FirebaseUI">
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
