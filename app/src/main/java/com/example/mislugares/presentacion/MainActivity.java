@@ -15,7 +15,9 @@ import com.example.mislugares.casos_uso.CasosUsoActividades;
 import com.example.mislugares.casos_uso.CasosUsoLocalizacion;
 import com.example.mislugares.casos_uso.CasosUsoLugar;
 import com.example.mislugares.datos.LugaresBD;
+import com.example.mislugares.datos.LugaresLista;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(getIntent().getBooleanExtra("editProfile", false)) {
+        if (getIntent().getBooleanExtra("editProfile", false)) {
             Intent intent = new Intent(this, UsuarioActivity.class);
             startActivity(intent);
         }
+
     }
 
     @Override
