@@ -11,10 +11,11 @@ public class Lugar {
     private String comentario;
     private long fecha;
     private float valoracion;
+    private String creador;
 
     public Lugar(String nombre, String direccion, double longitud,
                  double latitud, TipoLugar tipo, int telefono, String url, String comentario,
-                 int valoracion) {
+                 int valoracion, String creador) {
         fecha = System.currentTimeMillis();
         posicion = new GeoPunto(longitud, latitud);
         this.nombre = nombre;
@@ -24,6 +25,7 @@ public class Lugar {
         this.url = url;
         this.comentario = comentario;
         this.valoracion = valoracion;
+        this.creador = creador;
     }
 
     public Lugar() {
@@ -128,4 +130,11 @@ public class Lugar {
                 '}';
     }
 
+    public String getCreador() {
+        return creador;
+    }
+
+    public void setCreador(String creador) {
+        this.creador = creador;
+    }
 }

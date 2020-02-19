@@ -16,7 +16,9 @@ import com.example.mislugares.casos_uso.CasosUsoActividades;
 import com.example.mislugares.casos_uso.CasosUsoLocalizacion;
 import com.example.mislugares.casos_uso.CasosUsoLugar;
 import com.example.mislugares.datos.LugaresAsinc;
+import com.example.mislugares.datos.Usuarios;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
-                usoLugar.nuevo();
+                usoLugar.nuevo(FirebaseAuth.getInstance().getCurrentUser().getUid());
             }
         });
 

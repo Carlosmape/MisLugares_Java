@@ -1,6 +1,7 @@
 package com.example.mislugares.datos;
 
 import com.example.mislugares.modelo.Lugar;
+import com.example.mislugares.modelo.Usuario;
 
 public interface LugaresAsinc {
     interface EscuchadorElemento {

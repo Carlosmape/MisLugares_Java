@@ -23,6 +23,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
     private int pos;
     private String _id;
     private Lugar lugar;
+    private String creador;
 
     private EditText nombre;
     private Spinner tipo;
@@ -40,7 +41,12 @@ public class EdicionLugarActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         pos = extras.getInt("pos", -1);
         _id = extras.getString("_id", null);
-        if (_id!=null) lugar = new Lugar();
+        creador = extras.getString("creador", null);
+
+        if (_id!=null) {
+            lugar = new Lugar();
+            lugar.setCreador(creador);
+        }
         else         lugar = adaptador.getItem(pos);
         actualizaVistas();
     }
@@ -79,6 +85,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
                 lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
                 lugar.setUrl(url.getText().toString());
                 lugar.setComentario(comentario.getText().toString());
+                lugar.setCreador(creador);
                 if (_id==null) _id = adaptador.getKey(pos);
                 usoLugar.guardar(_id, lugar);
                 finish();

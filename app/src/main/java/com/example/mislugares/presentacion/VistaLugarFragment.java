@@ -20,6 +20,8 @@ import com.example.mislugares.R;
 import com.example.mislugares.casos_uso.CasosUsoLugarFecha;
 import com.example.mislugares.datos.LugaresAsinc;
 import com.example.mislugares.modelo.Lugar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -137,6 +139,8 @@ public class VistaLugarFragment extends Fragment {
         lugar = adaptador.getItem(pos);
         TextView nombre = v.findViewById(R.id.nombre);
         nombre.setText(lugar.getNombre());
+        TextView creador = v.findViewById(R.id.creador);
+        creador.setText(lugar.getCreador());
         ImageView logo_tipo = v.findViewById(R.id.logo_tipo);
         logo_tipo.setImageResource(lugar.getTipo().getRecurso());
         TextView tipo = v.findViewById(R.id.tipo);

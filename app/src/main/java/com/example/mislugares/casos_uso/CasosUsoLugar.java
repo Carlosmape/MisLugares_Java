@@ -15,10 +15,13 @@ import com.example.mislugares.R;
 import com.example.mislugares.datos.LugaresAsinc;
 import com.example.mislugares.modelo.GeoPunto;
 import com.example.mislugares.modelo.Lugar;
+import com.example.mislugares.modelo.Usuario;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestoreUI;
 import com.example.mislugares.presentacion.EdicionLugarActivity;
 import com.example.mislugares.presentacion.VistaLugarActivity;
 import com.example.mislugares.presentacion.VistaLugarFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -99,10 +102,11 @@ public class CasosUsoLugar {
         }
     }
 
-    public void nuevo() {
+    public void nuevo(String creador) {
         final String id = lugares.nuevo();
         Intent i = new Intent(actividad, EdicionLugarActivity.class);
         i.putExtra("_id", id);
+        i.putExtra("creador", creador);
         actividad.startActivity(i);
     }
 
