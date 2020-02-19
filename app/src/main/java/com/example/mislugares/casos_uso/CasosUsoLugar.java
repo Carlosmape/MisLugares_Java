@@ -82,6 +82,9 @@ public class CasosUsoLugar {
     }
 
     public void editar(int pos, int codidoSolicitud) {
+
+        if (!CheckCurrentUserPermissions(adaptador.getKey(pos))) return;
+
         Intent i = new Intent(actividad, EdicionLugarActivity.class);
         i.putExtra("pos", pos);
         if (fragment != null)
@@ -91,6 +94,9 @@ public class CasosUsoLugar {
     }
 
     public void borrar(String id) {
+
+        if (!CheckCurrentUserPermissions(id)) return;
+
         lugares.borrar(id);
         adaptador.notifyDataSetChanged();
 
@@ -100,6 +106,14 @@ public class CasosUsoLugar {
         } else {
             mostrar(0);
         }
+    }
+
+    private boolean CheckCurrentUserPermissions(String lugarId) {
+        if (!FirebaseAuth.getInstance().getCurrentUser().getUid().equals(adaptador.getItem(adaptador.getPos(lugarId)).getCreador())){
+            Toast.makeText(this.actividad,"No tiene permisos para realizar la acción. Sólo el autor del lugar puede hacerlo", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     public void nuevo(String creador) {
