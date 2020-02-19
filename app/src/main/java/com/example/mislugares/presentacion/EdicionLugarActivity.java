@@ -11,7 +11,6 @@ import com.example.mislugares.Aplicacion;
 import com.example.mislugares.R;
 import com.example.mislugares.casos_uso.CasosUsoLugar;
 import com.example.mislugares.datos.LugaresAsinc;
-import com.example.mislugares.datos.LugaresBD;
 import com.example.mislugares.modelo.Lugar;
 import com.example.mislugares.modelo.TipoLugar;
 

@@ -20,8 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelectorFragment extends Fragment {
     private LugaresAsinc lugares;
-    private AdaptadorLugaresFirestoreUI adaptador;
-    public static AdaptadorLugaresFirestoreUI adaptador2;
+    public AdaptadorLugaresFirestoreUI adaptador;
     private CasosUsoLugar usoLugar;
     private RecyclerView recyclerView;
 
@@ -39,14 +38,10 @@ public class SelectorFragment extends Fragment {
         super.onActivityCreated(state);
         lugares = ((Aplicacion) getActivity().getApplication()).lugares;
         adaptador = ((Aplicacion) getActivity().getApplication()).adaptador;
-        usoLugar = new CasosUsoLugar(getActivity(), this, lugares, adaptador);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        Query query = FirebaseFirestore.getInstance().collection("lugares").limit(50);
-        FirestoreRecyclerOptions<Lugar> opciones = new FirestoreRecyclerOptions.Builder<Lugar>().setQuery(query, Lugar.class).build();
-        adaptador2 = new AdaptadorLugaresFirestoreUI(opciones, getContext());
-        recyclerView.setAdapter(adaptador2);
-        adaptador2.startListening();
+        usoLugar = new CasosUsoLugar(getActivity(), this, lugares, adaptador);
+        recyclerView.setAdapter(adaptador);
         adaptador.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,24 +50,13 @@ public class SelectorFragment extends Fragment {
             }
         });
 
+        adaptador.startListening();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        adaptador2.stopListening();
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        adaptador2.startListening();
+        adaptador.stopListening();
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adaptador2.stopListening();
-    }
-
 }
