@@ -16,6 +16,7 @@ import com.example.mislugares.datos.LugaresAsinc;
 import com.example.mislugares.modelo.GeoPunto;
 import com.example.mislugares.modelo.Lugar;
 import com.example.mislugares.modelo.Usuario;
+import com.example.mislugares.presentacion.AdaptadorLugaresFirestore;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestoreUI;
 import com.example.mislugares.presentacion.EdicionLugarActivity;
 import com.example.mislugares.presentacion.VistaLugarActivity;
@@ -39,11 +40,11 @@ public class CasosUsoLugar {
     protected FragmentActivity actividad;
     protected Fragment fragment;
     protected LugaresAsinc lugares;
-    protected AdaptadorLugaresFirestoreUI adaptador;
+    protected AdaptadorLugaresFirestore adaptador;
 
     public CasosUsoLugar(FragmentActivity actividad, Fragment fragment,
                          LugaresAsinc lugares,
-                         AdaptadorLugaresFirestoreUI adaptador) {
+                         AdaptadorLugaresFirestore adaptador) {
         this.actividad = actividad;
         this.fragment = fragment;
         this.lugares = lugares;

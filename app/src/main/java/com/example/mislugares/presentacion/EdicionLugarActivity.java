@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class EdicionLugarActivity extends AppCompatActivity {
     private LugaresAsinc lugares;
-    private AdaptadorLugaresFirestoreUI adaptador;
+    private AdaptadorLugaresFirestore adaptador;
     private CasosUsoLugar usoLugar;
     private int pos;
     private String _id;

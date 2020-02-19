@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SelectorFragment extends Fragment {
     private LugaresAsinc lugares;
-    public AdaptadorLugaresFirestoreUI adaptador;
+    public AdaptadorLugaresFirestore adaptador;
     private CasosUsoLugar usoLugar;
     private RecyclerView recyclerView;
 
