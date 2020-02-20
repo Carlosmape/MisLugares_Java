@@ -28,6 +28,8 @@ import java.util.Date;
 
 import androidx.fragment.app.Fragment;
 
+import static com.example.mislugares.datos.ValoracionesFirestore.guardarValoracion;
+
 public class VistaLugarFragment extends Fragment {
 
     final static int RESULTADO_EDITAR = 1;
@@ -172,16 +174,16 @@ public class VistaLugarFragment extends Fragment {
                     @Override
                     public void onRatingChanged(RatingBar ratingBar,
                                                 float valor, boolean fromUser) {
-                        lugar.setValoracion(valor);
-                        usoLugar.actualizaPosLugar(pos, lugar);
-                        pos = adaptador.getPos(_id);
+                        String usuario = FirebaseAuth.getInstance().getUid();
+                        guardarValoracion(_id, usuario, ((double) valor));
                     }
                 });
         usoLugar.visualizarFoto(lugar, foto);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode,
-                                                         Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent data) {
         //super.onActivityResult(requestCode,resultCode, data);
 
         if (requestCode == RESULTADO_EDITAR) {
