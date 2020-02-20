@@ -9,6 +9,7 @@ import android.widget.Spinner;
 
 import com.example.mislugares.Aplicacion;
 import com.example.mislugares.R;
+import com.example.mislugares.casos_uso.CasosUsoLocalizacion;
 import com.example.mislugares.casos_uso.CasosUsoLugar;
 import com.example.mislugares.datos.LugaresAsinc;
 import com.example.mislugares.modelo.Lugar;
@@ -46,6 +47,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
         if (_id!=null) {
             lugar = new Lugar();
             lugar.setCreador(creador);
+            lugar.setPosicion(((Aplicacion) this.getApplication()).posicionActual);
         }
         else         lugar = adaptador.getItem(pos);
         actualizaVistas();
