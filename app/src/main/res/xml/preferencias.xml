@@ -35,6 +35,11 @@
         android:defaultValue="50"
         android:key="maxlugares"
         android:summary="Máximo lugares a mostrar"
-        android:title="Lugares a mostrar"/>
+        android:title="Lugares a mostrar" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="firebaseUI"
+        android:summary="Utilizar FirebaseUI en lugar de directamente el SDK"
+        android:title="Usar FirebaseUI" />
 </PreferenceScreen>
 

@@ -12,6 +12,7 @@ import com.example.mislugares.datos.LugaresAsinc;
 import com.example.mislugares.modelo.Lugar;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestore;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestoreUI;
+import com.example.mislugares.presentacion.AdaptadorLugaresInterface;
 import com.example.mislugares.presentacion.DialogoSelectorFecha;
 import com.example.mislugares.presentacion.DialogoSelectorHora;
 
@@ -32,7 +33,7 @@ public class CasosUsoLugarFecha extends CasosUsoLugar
     public CasosUsoLugarFecha(FragmentActivity actividad,
                               Fragment fragment,
                               LugaresAsinc lugares,
-                              AdaptadorLugaresFirestore adaptador) {
+                              AdaptadorLugaresInterface adaptador) {
         super(actividad, fragment, lugares, adaptador);
     }
 

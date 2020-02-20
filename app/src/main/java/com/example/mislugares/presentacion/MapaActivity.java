@@ -25,7 +25,7 @@ import androidx.fragment.app.FragmentActivity;
 public class MapaActivity extends FragmentActivity
         implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private GoogleMap mapa;
-    private AdaptadorLugaresFirestore adaptador;
+    private AdaptadorLugaresInterface adaptador;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -28,7 +28,7 @@ import java.util.List;
 import static java.lang.Math.min;
 import static java.lang.StrictMath.abs;
 
-public class AdaptadorLugaresFirestore extends RecyclerView.Adapter<AdaptadorLugares.ViewHolder> implements EventListener<QuerySnapshot> {
+public class AdaptadorLugaresFirestore extends RecyclerView.Adapter<AdaptadorLugares.ViewHolder> implements AdaptadorLugaresInterface, EventListener<QuerySnapshot> {
     public static final String TAG = "Mislugares";
     private Context context;
     private Query query;

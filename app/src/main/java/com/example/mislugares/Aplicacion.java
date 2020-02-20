@@ -8,6 +8,7 @@ import com.example.mislugares.modelo.GeoPunto;
 import com.example.mislugares.modelo.Lugar;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestore;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestoreUI;
+import com.example.mislugares.presentacion.AdaptadorLugaresInterface;
 import com.example.mislugares.presentacion.SelectorFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -16,7 +17,7 @@ import com.google.firebase.firestore.Query;
 public class Aplicacion extends Application {
 
     public LugaresAsinc lugares;
-    public AdaptadorLugaresFirestore adaptador;
+    public AdaptadorLugaresInterface adaptador;
     public GeoPunto posicionActual = new GeoPunto(0.0, 0.0);
 
     @Override

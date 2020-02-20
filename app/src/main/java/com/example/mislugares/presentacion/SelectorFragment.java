@@ -26,7 +26,7 @@ import static com.example.mislugares.datos.Preferencias.SELECCION_TIPO;
 
 public class SelectorFragment extends Fragment {
     private LugaresAsinc lugares;
-    public static AdaptadorLugaresFirestore adaptador;
+    public static AdaptadorLugaresInterface adaptador;
     private static CasosUsoLugar usoLugar;
     private static RecyclerView recyclerView;
 
@@ -47,7 +47,7 @@ public class SelectorFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         usoLugar = new CasosUsoLugar(getActivity(), this, lugares, adaptador);
         adaptador = ((Aplicacion) getActivity().getApplication()).adaptador;
-        recyclerView.setAdapter(adaptador);
+        recyclerView.setAdapter((RecyclerView.Adapter)adaptador);
         ponerAdaptador(getContext());
     }
 
@@ -76,21 +76,27 @@ public class SelectorFragment extends Fragment {
                 !(pref.criterioOrdenacion().equalsIgnoreCase("tipo")))
             query = query.orderBy(pref.criterioOrdenacion(), Query.Direction.DESCENDING);
 
+
         if (adaptador != null)
             adaptador.stopListening();
         // FirestoreRecyclerOptions<Lugar>opciones=new FirestoreRecyclerOptions
         // .Builder<Lugar>().setQuery(query, Lugar.class).build();
         // adaptador = new AdaptadorLugaresFirestoreUI(opciones, context);
-        adaptador = new AdaptadorLugaresFirestore(context, query);
+        if (pref.usarFirebaseUI()) {
+            FirestoreRecyclerOptions<Lugar> opciones = new FirestoreRecyclerOptions.Builder < Lugar > ().setQuery(query, Lugar.class).build();
+            adaptador = new AdaptadorLugaresFirestoreUI(opciones, context);
+        } else {
+            adaptador = new AdaptadorLugaresFirestore(context, query);
+        }
         ((Aplicacion) context.getApplicationContext()).adaptador = adaptador;
         adaptador.startListening();
         adaptador.setOnItemClickListener(new View.OnClickListener() {
-            @Override public
-            void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 int pos = (Integer) (v.getTag());
                 usoLugar.mostrar(pos);
             }
         });
-        if (recyclerView != null) recyclerView.setAdapter(adaptador);
+        if (recyclerView != null) recyclerView.setAdapter((RecyclerView.Adapter) adaptador);
     }
 }

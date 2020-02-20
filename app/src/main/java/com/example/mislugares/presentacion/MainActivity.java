@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     //private RecyclerView recyclerView;
     private LugaresAsinc lugares;
-    public AdaptadorLugaresFirestore adaptador;
+    public AdaptadorLugaresInterface adaptador;
     private CasosUsoLugar usoLugar;
     private CasosUsoActividades usoActividades;
     private CasosUsoLocalizacion usoLocalizacion;

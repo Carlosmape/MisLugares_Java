@@ -18,6 +18,7 @@ import com.example.mislugares.modelo.Lugar;
 import com.example.mislugares.modelo.Usuario;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestore;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestoreUI;
+import com.example.mislugares.presentacion.AdaptadorLugaresInterface;
 import com.example.mislugares.presentacion.EdicionLugarActivity;
 import com.example.mislugares.presentacion.VistaLugarActivity;
 import com.example.mislugares.presentacion.VistaLugarFragment;
@@ -40,11 +41,11 @@ public class CasosUsoLugar {
     protected FragmentActivity actividad;
     protected Fragment fragment;
     protected LugaresAsinc lugares;
-    protected AdaptadorLugaresFirestore adaptador;
+    protected AdaptadorLugaresInterface adaptador;
 
     public CasosUsoLugar(FragmentActivity actividad, Fragment fragment,
                          LugaresAsinc lugares,
-                         AdaptadorLugaresFirestore adaptador) {
+                         AdaptadorLugaresInterface adaptador) {
         this.actividad = actividad;
         this.fragment = fragment;
         this.lugares = lugares;

@@ -37,7 +37,7 @@ public class VistaLugarFragment extends Fragment {
     private Uri uriUltimaFoto;
 
     private LugaresAsinc lugares;
-    private AdaptadorLugaresFirestore adaptador;
+    private AdaptadorLugaresInterface adaptador;
 
     private CasosUsoLugarFecha usoLugar;
     /*private*/public int pos;
