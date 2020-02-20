@@ -8,6 +8,7 @@ import com.example.mislugares.modelo.GeoPunto;
 import com.example.mislugares.modelo.Lugar;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestore;
 import com.example.mislugares.presentacion.AdaptadorLugaresFirestoreUI;
+import com.example.mislugares.presentacion.SelectorFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -26,6 +27,7 @@ public class Aplicacion extends Application {
         //FirestoreRecyclerOptions<Lugar> opciones = new FirestoreRecyclerOptions.Builder<Lugar>().setQuery(query, Lugar.class).build();
         //adaptador = new AdaptadorLugaresFirestoreUI(opciones, this);
         adaptador = new AdaptadorLugaresFirestore(this, query);
+        SelectorFragment.ponerAdaptador(this);
     }
    /* @Override public void onCreate() {
         super.onCreate();

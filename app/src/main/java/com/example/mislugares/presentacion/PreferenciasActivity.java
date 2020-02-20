@@ -11,4 +11,10 @@ public class PreferenciasActivity extends Activity {
                 .replace(android.R.id.content, new PreferenciasFragment())
                 .commit();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SelectorFragment.ponerAdaptador(this);
+    }
 }
