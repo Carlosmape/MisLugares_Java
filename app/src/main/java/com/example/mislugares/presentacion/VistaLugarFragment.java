@@ -19,6 +19,7 @@ import com.example.mislugares.Aplicacion;
 import com.example.mislugares.R;
 import com.example.mislugares.casos_uso.CasosUsoLugarFecha;
 import com.example.mislugares.datos.LugaresAsinc;
+import com.example.mislugares.datos.ValoracionesFirestore;
 import com.example.mislugares.modelo.Lugar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +29,8 @@ import java.util.Date;
 
 import androidx.fragment.app.Fragment;
 
-import static com.example.mislugares.datos.ValoracionesFirestore.guardarValoracion;
+import static com.example.mislugares.datos.ValoracionesFirestore.guardarValoracionYRecalcular;
+import static com.example.mislugares.datos.ValoracionesFirestore.leerValoracion;
 
 public class VistaLugarFragment extends Fragment {
 
@@ -166,18 +168,31 @@ public class VistaLugarFragment extends Fragment {
         TextView hora = v.findViewById(R.id.hora);
         hora.setText(DateFormat.getTimeInstance().format(
                 new Date(lugar.getFecha())));
-        RatingBar valoracion = v.findViewById(R.id.valoracion);
-        valoracion.setOnRatingBarChangeListener(null);  //<<<<<<<<<<<<<<<<<<
-        valoracion.setRating(lugar.getValoracion());
-        valoracion.setOnRatingBarChangeListener(
-                new RatingBar.OnRatingBarChangeListener() {
-                    @Override
-                    public void onRatingChanged(RatingBar ratingBar,
-                                                float valor, boolean fromUser) {
-                        String usuario = FirebaseAuth.getInstance().getUid();
-                        guardarValoracion(_id, usuario, ((double) valor));
+        final RatingBar valoracion = (RatingBar) v.findViewById(R.id.valoracion);
+        final String usuario = FirebaseAuth.getInstance().getUid();
+        leerValoracion(_id, usuario, new ValoracionesFirestore.EscuchadorValoracion() {
+            @Override
+            public void onNoExiste() {
+                this.onRespuesta(0.0);
+            }
+
+            @Override
+            public void onRespuesta(Double valor) {
+                valoracion.setOnRatingBarChangeListener(null);
+                valoracion.setRating(valor.floatValue());
+                valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override public
+                    void onRatingChanged(RatingBar ratingBar, float valor, boolean fromUser) {
+                        guardarValoracionYRecalcular(_id, usuario, (double) valor);
                     }
                 });
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+        });
+
         usoLugar.visualizarFoto(lugar, foto);
     }
 
